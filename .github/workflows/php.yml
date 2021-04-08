@@ -9,15 +9,37 @@ on:
   
 jobs:
   build:
-
+    services:
+      # mysql-service Label used to access the service container
+      mysql-service:
+        # Docker Hub image (also with version)
+        image: mysql:5.7
+        env:
+          ## Accessing to Github secrets, where you can store your configuration - but at the moment we'll hard code them.
+          ## MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          MYSQL_ROOT_PASSWORD: automated_tests
+          MYSQL_DATABASE: automated_tests
+          ## map the "external" 33306 port with the "internal" 3306
+        ports:
+          - 33306:3306
+          # Set health checks to wait until mysql database has started (it takes some seconds to start)
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
     runs-on: ubuntu-latest
-
+    
+    env: 
+      INSTANCE_URL: http://localhost DATABASE_DRIVER=MYSQL DATABASE_NAME=automated_tests DATABASE_HOST=localhost DATABASE_USER=automated_tests DATABASE_PASSWORD=automated_tests INSTANCE_ADMIN_USER=admin INSTANCE_ADMIN_PASSWORD=admin1 COMPOSER_MEMORY_LIMIT=-1
     steps:
     - uses: actions/checkout@v2
     - name: Make sure we are using composer v1
       run: |
         sudo composer self-update --1
         sudo chown $USER $HOME/.composer
+    - name: Show the composer version
+      run : composer --version
     - name: Validate composer.json and composer.lock
       run: composer validate
 
@@ -38,3 +60,4 @@ jobs:
 
     # - name: Run test suite
     #   run: composer run-script test
+    - name: Set 
