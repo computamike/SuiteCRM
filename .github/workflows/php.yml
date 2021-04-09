@@ -19,6 +19,8 @@ jobs:
           ## MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}
           MYSQL_ROOT_PASSWORD: automated_tests
           MYSQL_DATABASE: automated_tests
+          MYSQL_USER: automated_tests
+          MYSQL_PASSWORD: automated_tests
           ## map the "external" 33306 port with the "internal" 3306
         ports:
           - 3306:3306
@@ -57,7 +59,7 @@ jobs:
     - name: test MySQL connection
       run: |
         mysql --version
-        mysql -h 127.0.0.1 -P 3306 -u automated_tests -p automated_tests
+        mysql -h 127.0.0.1 -P 3306 -u root -p automated_tests
     - name: Setup Database
       run: |
         mysql -e "CREATE DATABASE automated_tests CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
