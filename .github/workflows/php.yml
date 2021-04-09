@@ -64,8 +64,8 @@ jobs:
     # NOTE : All of this might be replaced, by including an PHP Apache docker image name instead, and mapping the volume...
     - name: Install Apache
       run: |
-        apt-get update
-        apt-get install apache2 libapache2-mod-fastcgi
+        sudo apt-get update
+        sudo apt-get install apache2 libapache2-mod-fastcgi
     - name: Enable FPM
       run: |
         cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf 2>/dev/null || true
