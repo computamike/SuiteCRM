@@ -56,11 +56,11 @@ jobs:
 
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
-    - name: Setup Database
-      run: |
-        mysql -h 127.0.0.1 -P 3306 -u root -pautomated_tests -e "CREATE DATABASE automated_tests CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
-        mysql -h 127.0.0.1 -P 3306 -u root -pautomated_tests -e "CREATE USER 'automated_tests'@'localhost' IDENTIFIED BY 'automated_tests';"
-        mysql -h 127.0.0.1 -P 3306 -u root -pautomated_tests -e "GRANT ALL PRIVILEGES ON automated_tests.* TO 'automated_tests'@'localhost';"
+    # - name: Setup Database
+    #   run: |
+         # mysql -h 127.0.0.1 -P 3306 -u root -pautomated_tests -e "CREATE DATABASE automated_tests CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
+         # mysql -h 127.0.0.1 -P 3306 -u root -pautomated_tests -e "CREATE USER 'automated_tests'@'localhost' IDENTIFIED BY 'automated_tests';"
+         # mysql -h 127.0.0.1 -P 3306 -u root -pautomated_tests -e "GRANT ALL PRIVILEGES ON automated_tests.* TO 'automated_tests'@'localhost';"
     # NOTE : All of this might be replaced, by including an PHP Apache docker image name instead, and mapping the volume...
     - name: Install Apache
       run: |
