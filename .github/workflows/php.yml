@@ -54,7 +54,9 @@ jobs:
 
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
-
+    - name: Start MySQL
+      run: |
+        sudo /etc/init.d/mysql start
     - name: Setup Database
       run: |
         mysql -e "CREATE DATABASE automated_tests CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
