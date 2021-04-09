@@ -10,6 +10,8 @@ on:
 jobs:
   build:
     services:
+      apache-fpm:
+        image: php:7.4.16-fpm-alpine3.13
       # mysql-service Label used to access the service container
       mysql-service:
         # Docker Hub image (also with version)
@@ -56,25 +58,6 @@ jobs:
 
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
-    # - name: Setup Database
-    #   run: |
-         # mysql -h 127.0.0.1 -P 3306 -u root -pautomated_tests -e "CREATE DATABASE automated_tests CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
-         # mysql -h 127.0.0.1 -P 3306 -u root -pautomated_tests -e "CREATE USER 'automated_tests'@'localhost' IDENTIFIED BY 'automated_tests';"
-         # mysql -h 127.0.0.1 -P 3306 -u root -pautomated_tests -e "GRANT ALL PRIVILEGES ON automated_tests.* TO 'automated_tests'@'localhost';"
-    # NOTE : All of this might be replaced, by including an PHP Apache docker image name instead, and mapping the volume...
-    - name: Install Apache
-      run: |
-        sudo apt-get update
-        sudo apt-get install apache2 libapache2-mod-fastcgi
-    - name: Enable FPM
-      run: |
-        cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf 2>/dev/null || true
-        cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
-        a2enmod rewrite actions fastcgi alias
-        echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-        sed -i -e "s,www-data,travis,g" /etc/apache2/envvars
-        chown -R travis:travis /var/lib/apache2/fastcgi
-        ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
         
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
