@@ -60,7 +60,7 @@ jobs:
       run: |
         mysql --version
         mysql --help
-        mysql -h 127.0.0.1 -P 3306 -u root -p automated_tests
+        mysql -h 127.0.0.1 -P 3306 -u root -pautomated_tests
     - name: Setup Database
       run: |
         mysql -e "CREATE DATABASE automated_tests CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
