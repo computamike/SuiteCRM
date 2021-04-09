@@ -57,7 +57,7 @@ jobs:
     - name: test MySQL connection
       run: |
         mysql --version
-        mysql -h 127.0.0.1 -P 3306
+        mysql -h 127.0.0.1 -P 3306 -u automated_tests -p automated_tests
     - name: Setup Database
       run: |
         mysql -e "CREATE DATABASE automated_tests CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;"
